@@ -58,7 +58,7 @@ describe('UsersController', () => {
 
   describe('create', () => {
     it('should call usersService.create with the provided DTO', async () => {
-      const createUserDto: CreateUserDto = { username: 'test' } as CreateUserDto; // Partial DTO
+      const createUserDto: CreateUserDto = { username: 'test' } as CreateUserDto;
       await controller.create(createUserDto);
       expect(service.create).toHaveBeenCalledWith(createUserDto);
     });
@@ -73,7 +73,7 @@ describe('UsersController', () => {
 
   describe('getMe', () => {
     it('should return the user from the decorator', async () => {
-      const user: User = { id: 1, username: 'test', createdAt: new Date(), updatedAt: new Date() } as User; // Mock User
+      const user: User = { id: 1, username: 'test', createdAt: new Date(), updatedAt: new Date() } as User;
       const result = controller.getMe(user);
       expect(result).toEqual(user);
     });
@@ -90,7 +90,7 @@ describe('UsersController', () => {
   describe('update', () => {
     it('should call usersService.update with the provided ID and DTO', async () => {
       const id = '1';
-      const updateUserDto: UpdateUserDto = { username: 'updated' } as UpdateUserDto; // Partial DTO
+      const updateUserDto: UpdateUserDto = { username: 'updated' } as UpdateUserDto;
       await controller.update(id, updateUserDto);
       expect(service.update).toHaveBeenCalledWith(+id, updateUserDto);
     });
@@ -134,8 +134,6 @@ describe('UsersController', () => {
       await controller.update(id, updateUserDto);
 
       await controller.remove(id);
-
-      // Correctly check calls in any order:
       const expectedCalls = [
         ['permissions', UsersController.prototype.create],
         ['permissions', UsersController.prototype.findAll],
@@ -144,7 +142,7 @@ describe('UsersController', () => {
         ['permissions', UsersController.prototype.remove],
       ];
 
-      expect((reflector.get as jest.Mock).mock.calls.length).toBe(expectedCalls.length); // Check the number of calls
+      expect((reflector.get as jest.Mock).mock.calls.length).toBe(expectedCalls.length);
 
       expectedCalls.forEach(call => {
         expect(reflector.get).toHaveBeenCalledWith(...call);

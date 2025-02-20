@@ -13,12 +13,12 @@ import {
   VIEW_ROLE,
 } from '../../common/constants/db.constants';
 import { Reflector } from '@nestjs/core';
-import { INestApplication } from '@nestjs/common'; // Import INestApplication
+import { INestApplication } from '@nestjs/common';
 
 describe('RolesController', () => {
   let controller: RolesController;
   let service: RolesService;
-  let app: INestApplication; // Add app variable
+  let app: INestApplication;
   let reflector: Reflector;
 
   beforeEach(async () => {
@@ -49,24 +49,20 @@ describe('RolesController', () => {
       .useValue({ canActivate: jest.fn(() => true) })
       .compile();
 
-      app = module.createNestApplication(); // Create the Nest application
-      controller = app.get<RolesController>(RolesController); // Get controller from app context
-      service = app.get<RolesService>(RolesService);         // Get service from app context
-      reflector = app.get<Reflector>(Reflector);              // Get Reflector from app context
+      app = module.createNestApplication();
+      controller = app.get<RolesController>(RolesController);
+      service = app.get<RolesService>(RolesService);
+      reflector = app.get<Reflector>(Reflector);
 
-      await app.init(); // Initialize the Nest application
+      await app.init();
 
   });
 
   afterEach(async () => {
-    await app.close(); // Close the Nest application after each test
+    await app.close();
   });
 
-
-  // ... (rest of the tests remain the same)
-
   describe('Guards and Decorators', () => {
-    // ... (test for guards remains the same)
 
     it('should have correct permissions for each method', () => {
 

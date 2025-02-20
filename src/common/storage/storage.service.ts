@@ -35,7 +35,7 @@ export class StorageService {
   }
 
 
-  async upload(file: Express.Multer.File, userId: number): Promise<string> { // Returns the path
+  async upload(file: Express.Multer.File, userId: number): Promise<string> {
     const bucketName = process.env.AWS_BUCKET_NAME;
     const key = `${userId}/${Date.now()}-${file.originalname}`;
     const params = {
@@ -48,20 +48,20 @@ export class StorageService {
     try {
       const command = new PutObjectCommand(params);
       await this.s3.send(command);
-      return `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`; // Construct and return the URL
+      return `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
     } catch (error) {
       console.error("Error uploading to S3 in StorageService:", error);
       throw error;
     }
   }
 
-  async get(path: string): Promise<any> { // Returns stream or buffer
+  async get(path: string): Promise<any> { 
     const bucketName = process.env.AWS_BUCKET_NAME;
     if (!bucketName) {
       throw new Error('AWS_BUCKET_NAME environment variable is not defined.');
     }
 
-    const key = path.split('/').slice(-2).join('/'); // Extract Key from path
+    const key = path.split('/').slice(-2).join('/');
 
     const params = {
       Bucket: bucketName,

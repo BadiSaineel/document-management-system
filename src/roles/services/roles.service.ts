@@ -44,7 +44,7 @@ export class RolesService {
         if (!role) {
             throw new NotFoundException(`Role with ID ${id} not found`);
         }
-        Object.assign(role, updateRoleDto); // Update other properties
+        Object.assign(role, updateRoleDto);
         if (updateRoleDto.permissions) {
           const permissions = await this.permissionsRepository.findBy({ id: In(updateRoleDto.permissions) });
           role.permissions = permissions;

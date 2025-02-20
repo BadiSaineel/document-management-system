@@ -9,7 +9,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
 
-jest.mock('bcrypt'); // Mock bcrypt
+jest.mock('bcrypt');
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -57,7 +57,7 @@ describe('UsersService', () => {
         password: 'password',
       };
       const hashedPassword = 'hashedPassword';
-      const defaultRole: Role = { id: 1, name: 'viewer' } as Role; // Mock Role object
+      const defaultRole: Role = { id: 1, name: 'viewer' } as Role;
 
       (bcrypt.hash as jest.Mock).mockResolvedValue(hashedPassword);
       (rolesRepository.findOne as jest.Mock).mockResolvedValue(defaultRole);
@@ -68,7 +68,7 @@ describe('UsersService', () => {
         email: createUserDto.email,
         password: hashedPassword,
         role: defaultRole,
-        createdAt: new Date(), // Add other required properties
+        createdAt: new Date(),
         updatedAt: new Date(),
         documents: []
       };
@@ -125,7 +125,7 @@ describe('UsersService', () => {
         password: '',
         role: new Role,
         documents: []
-      }; // Mock User object
+      };
       (usersRepository.findOne as jest.Mock).mockResolvedValue(user);
 
       const result = await service.findOne(1);
@@ -171,7 +171,7 @@ describe('UsersService', () => {
         email: '',
         password: '',
         documents: []
-      }; // Mock with permissions
+      };
       (usersRepository.findOne as jest.Mock).mockResolvedValue(user);
 
       const result = await service.findOneWithRoleAndPermissios(1);
@@ -219,14 +219,13 @@ describe('UsersService', () => {
         username: 'updateduser',
         createdAt: new Date(),
         updatedAt: new Date(),
-        // Add other required properties from User entity
-        role: { id: 1, name: 'testRole' } as Role // Example
+        role: { id: 1, name: 'testRole' } as Role
         ,
         email: '',
         password: '',
         documents: []
       };
-      const updateResult: UpdateResult = { affected: 1, raw: {}, generatedMaps: [] }; // Mock UpdateResult
+      const updateResult: UpdateResult = { affected: 1, raw: {}, generatedMaps: [] };
 
 
       (usersRepository.findOne as jest.Mock).mockResolvedValue(updatedUser);
@@ -244,10 +243,10 @@ describe('UsersService', () => {
       const hashedPassword = 'hashedNewPassword';
       const updatedUser: User = {
         id: 1,
-        password: hashedPassword, // Updated password
+        password: hashedPassword,
         createdAt: new Date(),
         updatedAt: new Date(),
-        role: { id: 1, name: 'testRole' } as Role // Example
+        role: { id: 1, name: 'testRole' } as Role
         ,
         username: '',
         email: '',
@@ -262,14 +261,14 @@ describe('UsersService', () => {
       const result = await service.update(1, updateUserDto);
 
       expect(bcrypt.hash).toHaveBeenCalledWith(updateUserDto.password, 10);
-      expect(usersRepository.update).toHaveBeenCalledWith(1, { password: hashedPassword }); // Check hashed password is used
+      expect(usersRepository.update).toHaveBeenCalledWith(1, { password: hashedPassword });
       expect(usersRepository.findOne).toHaveBeenCalledWith(1);
       expect(result).toEqual(updatedUser);
     });
 
         it('should throw NotFoundException if user to update is not found', async () => {
       const updateUserDto: UpdateUserDto = { username: 'updateduser' };
-      const updateResult: UpdateResult = { affected: 0, raw: {}, generatedMaps: [] }; // No affected rows
+      const updateResult: UpdateResult = { affected: 0, raw: {}, generatedMaps: [] };
 
       (usersRepository.update as jest.Mock).mockResolvedValue(updateResult);
 

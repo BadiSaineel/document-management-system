@@ -9,13 +9,12 @@ export class DocumentsService {
   constructor(
     @InjectRepository(Document)
     private documentRepository: Repository<Document>,
-    private storageService: StorageService, // Inject StorageService
+    private storageService: StorageService,
   ) {}
 
   async uploadDocument(file: Express.Multer.File, title: string, metadata: any, userId: number): Promise<Document> {
     try {
-      const path = await this.storageService.upload(file, userId); // Use StorageService for upload
-      //const path = "tempPath";
+      const path = await this.storageService.upload(file, userId);
       const newDocument = this.documentRepository.create({
         title,
         path,
@@ -25,7 +24,7 @@ export class DocumentsService {
       return this.documentRepository.save(newDocument);
     } catch (error) {
       console.error("Error uploading document:", error);
-      throw error; // Re-throw to be handled by controller
+      throw error;
     }
   }
 
@@ -40,8 +39,7 @@ export class DocumentsService {
     }
 
     try {
-      return await this.storageService.get(document.path); // Use StorageService for retrieval
-      //return document;
+      return await this.storageService.get(document.path);
     } catch (error) {
       console.error("Error getting document:", error);
       throw error;
@@ -55,7 +53,7 @@ export class DocumentsService {
     }
 
     try {
-      await this.storageService.delete(document.path); // Use StorageService for deletion
+      await this.storageService.delete(document.path);
       await this.documentRepository.remove(document);
       return "Document deleted successfully";
     } catch (error) {

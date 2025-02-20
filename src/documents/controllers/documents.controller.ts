@@ -51,9 +51,9 @@ export class DocumentsController {
       }),
     )
     file: Express.Multer.File,
-    @Req() req: Request // Get the user from the request (if using auth)
+    @Req() req: Request
   ) {
-    const userId = req.user?.id; // Assuming you have user info in the request
+    const userId = req.user?.id;
     const { title, metadata } = req.body;
     if(userId)
         return this.documentsService.uploadDocument(file, title, metadata, userId);

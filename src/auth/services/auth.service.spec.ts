@@ -46,7 +46,7 @@ describe('AuthService', () => {
         email: 'test@example.com',
         password: 'password',
       };
-      const createdUser = { id: 1, username: 'testuser', email: 'test@example.com', createdAt: new Date(), updatedAt: new Date() }; // Mock user object
+      const createdUser = { id: 1, username: 'testuser', email: 'test@example.com', createdAt: new Date(), updatedAt: new Date() };
 
       (usersService.create as jest.Mock).mockResolvedValue(createdUser);
 
@@ -64,8 +64,7 @@ describe('AuthService', () => {
       };
       const error = new Error('Some error');
 
-      (usersService.create as jest.Mock).mockRejectedValue(error); // Mock error
-
+      (usersService.create as jest.Mock).mockRejectedValue(error);
       await expect(service.register(createUserDto)).rejects.toThrow(error);
     });
   });
@@ -73,7 +72,7 @@ describe('AuthService', () => {
   describe('login', () => {
     it('should return an access token upon successful login', async () => {
       const userDto = { username: 'testuser', password: 'password' };
-      const user = { id: 1, username: 'testuser', role: { name: 'testRole' } }; // Mock user with role
+      const user = { id: 1, username: 'testuser', role: { name: 'testRole' } };
       const accessToken = 'mockAccessToken';
 
       (usersService.findOneByUsername as jest.Mock).mockResolvedValue(user);

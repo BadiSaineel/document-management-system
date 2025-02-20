@@ -52,7 +52,7 @@ describe('DocumentsService', () => {
       const mockMetadata = { key: 'value' };
       const mockUserId = 123;
       const mockPath = 'path/to/file';
-      const mockDocument = { title: mockTitle, path: mockPath, metadata: mockMetadata, user: { id: mockUserId }, createdAt: new Date(), updatedAt: new Date() } as Document; // Mock Document
+      const mockDocument = { title: mockTitle, path: mockPath, metadata: mockMetadata, user: { id: mockUserId }, createdAt: new Date(), updatedAt: new Date() } as Document;
 
       (storageService.upload as jest.Mock).mockResolvedValue(mockPath);
       (documentRepository.create as jest.Mock).mockReturnValue(mockDocument);

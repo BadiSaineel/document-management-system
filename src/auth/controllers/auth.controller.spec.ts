@@ -24,8 +24,8 @@ describe('AuthController', () => {
         },
       ],
     })
-      .overrideGuard(LocalAuthGuard) // Override the guard
-      .useValue({ canActivate: jest.fn(() => true) }) // Mock canActivate
+      .overrideGuard(LocalAuthGuard)
+      .useValue({ canActivate: jest.fn(() => true) })
       .compile();
 
     controller = module.get<AuthController>(AuthController);

@@ -23,8 +23,6 @@ describe('StorageService', () => {
     (S3Client as jest.Mock).mockImplementation(() => s3Mock);
   });
 
-  // ... (constructor tests remain the same)
-
   describe('upload', () => {
     it('should upload and return URL', async () => {
       const mockFile = { buffer: Buffer.from('test'), originalname: 'test.txt', mimetype: 'text/plain' } as Express.Multer.File;
@@ -81,12 +79,12 @@ describe('StorageService', () => {
     it('should handle get when Body is undefined', async () => {
       const mockPath = 'path/to/file';
 
-      s3Mock.send.mockResolvedValue({} as never); // Simulate no Body
+      s3Mock.send.mockResolvedValue({} as never);
 
       const result = await service.get(mockPath);
 
       expect(s3Mock.send).toHaveBeenCalledWith(expect.any(GetObjectCommand));
-      expect(result).toEqual(Buffer.from('')); // Expect empty buffer
+      expect(result).toEqual(Buffer.from(''));
     });
   });
 
@@ -116,7 +114,5 @@ describe('StorageService', () => {
       delete process.env.AWS_ACCESS_KEY_ID;
       expect(() => new StorageService()).toThrowError('AWS_ACCESS_KEY_ID environment variable is not defined.');
     });
-
-    // ... (other env variable checks remain the same)
   });
 });
